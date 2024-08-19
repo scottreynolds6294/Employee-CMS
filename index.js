@@ -2,10 +2,10 @@ const inquirer = require('inquirer');
 const viewAllDepartments = require('./config/viewDepartments');
 const viewAllRoles = require('./config/viewRoles');
 const viewAllEmployees = require('./config/viewEmployees');
-const addDepartment = require('');
-const addRole = require('');
-const addEmployee = require(''); 
-const updateRole = require('');
+const addDepartment = require('./config/addDepartment');
+const addRole = require('./config/addRole');
+const addEmployee = require('./config/addEmployee'); 
+const updateRole = require('./config/updateRole');
 
 inquirer
     .prompt([
@@ -13,8 +13,14 @@ inquirer
             type: "list",
             message: "What would you like to do?",
             name: "options",
-            choices: ["View All Departments", "View All Roles", "View All Employees", "Add a Department", 
-                "Add a Role", "Add an Employee", "Update an Employee Role",]
+            choices: [
+                "View All Departments", 
+                "View All Roles", 
+                "View All Employees", 
+                "Add a Department", 
+                "Add a Role", 
+                "Add an Employee", 
+                "Update an Employee Role"]
         }
     ])
     .then((data) => {
