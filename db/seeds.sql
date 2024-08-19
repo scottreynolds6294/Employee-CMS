@@ -21,5 +21,5 @@ VALUES ('Tom', 'Smith', 1, null),
        ('Amy', 'Williams', 4, 3),
        ('Craig', 'Johnson', 5, null),
        ('Lisa', 'Phillips', 6, 5),
-       ('Phyllis' 'Peters', 7, null),
+       ('Phyllis', 'Peters', 7, null),
        ('Chris', 'Adams', 8, 7);
