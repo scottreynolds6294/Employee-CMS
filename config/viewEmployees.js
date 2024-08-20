@@ -7,6 +7,7 @@ const viewAllEmployees = async () => {
     e.first_name, 
     e.last_name, 
     r.title AS title, 
+    r.salary,
     d.name AS department, 
     CONCAT(m.first_name, ' ', m.last_name) AS manager
     FROM employee e

@@ -6,6 +6,10 @@ const addDepartment = require('./config/addDepartment');
 const addRole = require('./config/addRole');
 const addEmployee = require('./config/addEmployee'); 
 const updateRole = require('./config/updateRole');
+const updateManager = require('./config/updateManager');
+const deleteEmployee = require('./config/deleteEmployee');
+
+
 
 const handleUserAction = async (choice) => {
     switch (choice) {
@@ -30,9 +34,12 @@ const handleUserAction = async (choice) => {
         case "Update an Employee Role":
             await updateRole();
             break;
-        default:
-            console.log("Invalid option selected.");
+        case "Update an Employee Manager":
+            await updateManager();
             break;
+        case "Delete Employee":
+                await deleteEmployee();
+                break;
     }
 };
 
@@ -51,6 +58,8 @@ const promptUser = async () => {
                     "Add a Role", 
                     "Add an Employee", 
                     "Update an Employee Role",
+                    "Update an Employee Manager",
+                    "Delete Employee",
                     "Exit"
                 ]
             }
