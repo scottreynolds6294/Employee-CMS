@@ -1,6 +1,5 @@
 const inquirer = require('inquirer');
-const user = require('./connections');
-const viewAllEmployees = require('./viewEmployees');
+const client = require('../connections');
 
 const updateRole = async () => {
     try {
@@ -10,7 +9,7 @@ const updateRole = async () => {
                 name: 'employeeName',
                 message: 'Which employees role do you want to change?',
                 choices: async () => {
-                    const result = await user.query('SELECT id, CONCAT(first_name, \' \', last_name) AS name FROM employee');
+                    const result = await client.query('SELECT id, CONCAT(first_name, \' \', last_name) AS name FROM employee');
                     return result.rows.map(employee => employee.name);
                 }
             },
@@ -19,21 +18,21 @@ const updateRole = async () => {
                 name: 'newRole',
                 message: 'Which role should the employee be assigned to?',
                 choices: async () => {
-                    const result = await user.query('SELECT title FROM role');
-                    return result.row.map(role => role.title);
+                    const result = await client.query('SELECT title FROM role');
+                    return result.rows.map(role => role.title);
                 }
             }
         ]);
-        const employeeResult = await user.query('SELECT id from employee WHERE CONCAT(first_name, \' \', last_name) = $1',
+        const employeeResult = await client.query('SELECT id from employee WHERE CONCAT(first_name, \' \', last_name) = $1',
             [employeeName]
         );
         const employeeId = employeeResult.rows[0].id;
 
-        const roleResult = await user.query('SELECT id FROM role WHERE title = $1',
+        const roleResult = await client.query('SELECT id FROM role WHERE title = $1',
             [newRole]
         );
         const roleId = roleResult.rows[0].id;
-        await user.query(
+        await client.query(
             'UPDATE employee SET role_id = $1 WHERE id = $2',
             [roleId, employeeId]
         );

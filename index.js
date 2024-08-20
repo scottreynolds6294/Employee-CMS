@@ -7,47 +7,64 @@ const addRole = require('./config/addRole');
 const addEmployee = require('./config/addEmployee'); 
 const updateRole = require('./config/updateRole');
 
-inquirer
-    .prompt([
-        {
-            type: "list",
-            message: "What would you like to do?",
-            name: "options",
-            choices: [
-                "View All Departments", 
-                "View All Roles", 
-                "View All Employees", 
-                "Add a Department", 
-                "Add a Role", 
-                "Add an Employee", 
-                "Update an Employee Role"]
+const handleUserAction = async (choice) => {
+    switch (choice) {
+        case "View All Departments":
+            await viewAllDepartments();
+            break;
+        case "View All Roles":
+            await viewAllRoles();
+            break;
+        case "View All Employees":
+            await viewAllEmployees();
+            break;
+        case "Add a Department":
+            await addDepartment();
+            break;
+        case "Add a Role":
+            await addRole();
+            break;
+        case "Add an Employee":
+            await addEmployee();
+            break;
+        case "Update an Employee Role":
+            await updateRole();
+            break;
+        default:
+            console.log("Invalid option selected.");
+            break;
+    }
+};
+
+const promptUser = async () => {
+    try {
+        const { options } = await inquirer.prompt([
+            {
+                type: "list",
+                message: "What would you like to do?",
+                name: "options",
+                choices: [
+                    "View All Departments", 
+                    "View All Roles", 
+                    "View All Employees", 
+                    "Add a Department", 
+                    "Add a Role", 
+                    "Add an Employee", 
+                    "Update an Employee Role",
+                    "Exit"
+                ]
+            }
+        ]);
+        
+        if (options === "Exit") {
+            console.log("Goodbye!");
+            return; 
         }
-    ])
-    .then((data) => {
-        switch (data.options) {
-            case "View All Departments":
-                viewAllDepartments();
-                break;
-            case "View All Roles":
-                viewAllRoles();
-                break;
-            case "View All Employees":
-                viewAllEmployees;
-                break;
-            case "Add a Department":
-                addDepartment();
-                break;
-            case "Add a Role":
-                addRole();
-                break;
-            case "Add an Employee":
-                addEmployee();
-                break;
-            case "Update an Employee Role":
-                updateRole();
-                break;
-        }
-    })
-    .catch((error) => {
+        await handleUserAction(options);
+        promptUser();
+    } catch (error) {
         console.error("Prompt Error", error);
-    });
+    }
+};
+
+promptUser();

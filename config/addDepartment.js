@@ -1,5 +1,5 @@
 const inquirer = require('inquirer');
-const user = require('./connections');
+const client = require('../connections');
 
 const addDepartment = async () => {
     try {
@@ -11,7 +11,7 @@ const addDepartment = async () => {
                 validate: input => input ? true : 'Department name can not be empty'
             }
         ]);
-        const result = await user.query(
+        const result = await client.query(
             'INSERT INTO department (name) VALUES ($1) RETURNING *',
             [departmentName]
         );

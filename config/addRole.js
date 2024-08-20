@@ -1,5 +1,5 @@
 const inquirer = require('inquirer');
-const user = require('./connections');
+const client = require('../connections');
 
 const addRole = async () => {
     try {
@@ -23,12 +23,12 @@ const addRole = async () => {
                 name: 'roleDepartment',
                 message: 'What department does the role belong to?',
                 choices: async () => {
-                    const result = await user.query('SELECT name FROM department');
+                    const result = await client.query('SELECT name FROM department');
                     return result.rows.map(department => department.name);
                 }
             }
         ]);
-        const result = await user.query(
+        const result = await client.query(
             'INSERT INTO role (title, salary, department_id) VALUES ($1, $2, (SELECT id FROM department WHERE name = $3)) RETURNING *',
             [roleName, roleSalary, roleDepartment]
         );
